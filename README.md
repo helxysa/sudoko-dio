@@ -52,9 +52,10 @@ cd src
 <h3>Conteúdos que vi sobre Swing e AWT</h3>
 <strong>Tutoriais e Artigos:</strong>
 <ul>
-    <li><a href="https://www.alura.com.br/artigos/como-criar-uma-interface-grafica-com-swing-no-java" target="_blank" rel="noopener">Alura - Como criar uma interface gráfica com Swing (Java)</a></li>
-    <li><a href="https://www.devmedia.com.br/introducao-a-awt-x-swing/25835" target="_blank" rel="noopener">DevMedia - AWT x Swing e componentes JTextField</a></li>
-    <li><a href="https://www.guru99.com/java-swing-tutorial.html" target="_blank" rel="noopener">Guru99 - Java Tutorial Swing: Como criar um aplicativo GUI</a> (em inglês, mas muito didático)</li>
+    <li><a href="https://www.alura.com.br/artigos/como-criar-uma-interface-grafica-com-swing-no-java](https://www.youtube.com/watch?v=Ghb0owCoaEc" target="_blank" rel="noopener">Como criar janelas e botões no Java (interface gráfica) - Curso Java POO Aula #18
+</a></li>
+    <li><a href="https://www.alura.com.br/artigos/como-criar-interface-grafica-swing-java" target="_blank" rel="noopener">Como criar uma interface gráfica com Swing (Java)
+</a></li>
 </ul>
 
 <h3>Projetos Similares no GitHub</h3>
@@ -80,3 +81,4 @@ cd src
 
 </body>
 </html>
+
