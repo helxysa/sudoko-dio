@@ -26,17 +26,23 @@ public class Main {
         final var positions = Stream.of(args)
                 .collect(toMap(
                         k -> k.split(";")[0],
-                        v -> v.split(";")[1]));
+                        v -> v.split(";")[1]
+                ));
         var option = -1;
+        while (true){
+            System.out.println("Selecione uma das opções a seguir");
+            System.out.println("1 - Iniciar um novo Jogo");
+            System.out.println("2 - Colocar um novo número");
+            System.out.println("3 - Remover um número");
+            System.out.println("4 - Visualizar jogo atual");
+            System.out.println("5 - Verificar status do jogo");
+            System.out.println("6 - limpar jogo");
+            System.out.println("7 - Finalizar jogo");
+            System.out.println("8 - Sair");
 
-        // Mostrar cabeçalho do jogo
-        showGameHeader();
-
-        while (true) {
-            showMenu();
             option = scanner.nextInt();
 
-            switch (option) {
+            switch (option){
                 case 1 -> startGame(positions);
                 case 2 -> inputNumber();
                 case 3 -> removeNumber();
@@ -44,18 +50,15 @@ public class Main {
                 case 5 -> showGameStatus();
                 case 6 -> clearGame();
                 case 7 -> finishGame();
-                case 8 -> {
-                    System.out.println("\n Obrigado por jogar! Até logo! ");
-                    System.exit(0);
-                }
-                default -> System.out.println("❌ Opção inválida! Selecione uma das opções do menu.");
+                case 8 -> System.exit(0);
+                default -> System.out.println("Opção inválida, selecione uma das opções do menu");
             }
         }
     }
 
     private static void startGame(final Map<String, String> positions) {
-        if (nonNull(board)) {
-            System.out.println("  O jogo já foi iniciado!");
+        if (nonNull(board)){
+            System.out.println("O jogo já foi iniciado");
             return;
         }
 
@@ -72,165 +75,116 @@ public class Main {
         }
 
         board = new Board(spaces);
-        System.out.println("\n JOGO INICIADO COM SUCESSO! ");
-        System.out.println("=".repeat(50));
-        showCurrentGame();
-        System.out.println("=".repeat(50));
+        System.out.println("O jogo está pronto para começar");
     }
 
+
     private static void inputNumber() {
-        if (isNull(board)) {
-            System.out.println(" O jogo ainda não foi iniciado!");
+        if (isNull(board)){
+            System.out.println("O jogo ainda não foi iniciado iniciado");
             return;
         }
 
-        System.out.println("\n📝 INSERIR NÚMERO:");
-        System.out.println("─".repeat(30));
-        System.out.print("Informe a coluna (0-8): ");
+        System.out.println("Informe a coluna que em que o número será inserido");
         var col = runUntilGetValidNumber(0, 8);
-        System.out.print("Informe a linha (0-8): ");
+        System.out.println("Informe a linha que em que o número será inserido");
         var row = runUntilGetValidNumber(0, 8);
-        System.out.printf("Informe o número para a posição [%s,%s] (1-9): ", col, row);
+        System.out.printf("Informe o número que vai entrar na posição [%s,%s]\n", col, row);
         var value = runUntilGetValidNumber(1, 9);
-        if (!board.changeValue(col, row, value)) {
-            System.out.printf(" A posição [%s,%s] tem um valor fixo!\n", col, row);
-        } else {
-            System.out.println("✅ Número inserido com sucesso!");
+        if (!board.changeValue(col, row, value)){
+            System.out.printf("A posição [%s,%s] tem um valor fixo\n", col, row);
         }
     }
 
     private static void removeNumber() {
-        if (isNull(board)) {
-            System.out.println(" O jogo ainda não foi iniciado!");
+        if (isNull(board)){
+            System.out.println("O jogo ainda não foi iniciado iniciado");
             return;
         }
 
-        System.out.println("\n🗑️  REMOVER NÚMERO:");
-        System.out.println("─".repeat(30));
-        System.out.print("Informe a coluna (0-8): ");
+        System.out.println("Informe a coluna que em que o número será inserido");
         var col = runUntilGetValidNumber(0, 8);
-        System.out.print("Informe a linha (0-8): ");
+        System.out.println("Informe a linha que em que o número será inserido");
         var row = runUntilGetValidNumber(0, 8);
-        if (!board.clearValue(col, row)) {
-            System.out.printf(" A posição [%s,%s] tem um valor fixo!\n", col, row);
-        } else {
-            System.out.println(" Número removido com sucesso!");
+        if (!board.clearValue(col, row)){
+            System.out.printf("A posição [%s,%s] tem um valor fixo\n", col, row);
         }
     }
 
     private static void showCurrentGame() {
-        if (isNull(board)) {
-            System.out.println(" O jogo ainda não foi iniciado!");
+        if (isNull(board)){
+            System.out.println("O jogo ainda não foi iniciado iniciado");
             return;
         }
 
         var args = new Object[81];
         var argPos = 0;
         for (int i = 0; i < BOARD_LIMIT; i++) {
-            for (var col : board.getSpaces()) {
-                args[argPos++] = " " + ((isNull(col.get(i).getActual())) ? " " : col.get(i).getActual());
+            for (var col: board.getSpaces()){
+                args[argPos ++] = " " + ((isNull(col.get(i).getActual())) ? " " : col.get(i).getActual());
             }
         }
-        System.out.println("\n🎲 TABULEIRO ATUAL:");
+        System.out.println("Seu jogo se encontra da seguinte forma");
         System.out.printf((BOARD_TEMPLATE) + "\n", args);
     }
 
     private static void showGameStatus() {
-        if (isNull(board)) {
-            System.out.println(" O jogo ainda não foi iniciado!");
+        if (isNull(board)){
+            System.out.println("O jogo ainda não foi iniciado iniciado");
             return;
         }
 
-        System.out.println("\n📊 STATUS DO JOGO:");
-        System.out.println("─".repeat(30));
-        System.out.printf("Status: %s\n", board.getStatus().getLabel());
-        if (board.hasErrors()) {
-            System.out.println(" O jogo contém erros!");
+        System.out.printf("O jogo atualmente se encontra no status %s\n", board.getStatus().getLabel());
+        if(board.hasErrors()){
+            System.out.println("O jogo contém erros");
         } else {
-            System.out.println(" O jogo não contém erros!");
+            System.out.println("O jogo não contém erros");
         }
     }
 
     private static void clearGame() {
-        if (isNull(board)) {
-            System.out.println(" O jogo ainda não foi iniciado!");
+        if (isNull(board)){
+            System.out.println("O jogo ainda não foi iniciado iniciado");
             return;
         }
 
-        System.out.println("\n LIMPAR JOGO:");
-        System.out.println("─".repeat(30));
-        System.out.println("  Tem certeza que deseja limpar seu jogo e perder todo seu progresso?");
-        System.out.print("Digite 'sim' ou 'não': ");
+        System.out.println("Tem certeza que deseja limpar seu jogo e perder todo seu progresso?");
         var confirm = scanner.next();
-        while (!confirm.equalsIgnoreCase("sim") && !confirm.equalsIgnoreCase("não")) {
-            System.out.print(" Informe 'sim' ou 'não': ");
+        while (!confirm.equalsIgnoreCase("sim") && !confirm.equalsIgnoreCase("não")){
+            System.out.println("Informe 'sim' ou 'não'");
             confirm = scanner.next();
         }
 
-        if (confirm.equalsIgnoreCase("sim")) {
+        if(confirm.equalsIgnoreCase("sim")){
             board.reset();
-            System.out.println(" Jogo limpo com sucesso!");
-        } else {
-            System.out.println(" Operação cancelada!");
         }
     }
 
     private static void finishGame() {
-        if (isNull(board)) {
-            System.out.println(" O jogo ainda não foi iniciado!");
+        if (isNull(board)){
+            System.out.println("O jogo ainda não foi iniciado iniciado");
             return;
         }
 
-        System.out.println("\n🏁 FINALIZAR JOGO:");
-        System.out.println("─".repeat(30));
-
-        if (board.gameIsFinished()) {
-            System.out.println("🎉 PARABÉNS! VOCÊ CONCLUIU O JOGO! 🎉");
-            System.out.println("=".repeat(50));
+        if (board.gameIsFinished()){
+            System.out.println("Parabéns você concluiu o jogo");
             showCurrentGame();
-            System.out.println("=".repeat(50));
             board = null;
         } else if (board.hasErrors()) {
-            System.out.println(" Seu jogo contém erros! Verifique seu tabuleiro e ajuste-o.");
+            System.out.println("Seu jogo conté, erros, verifique seu board e ajuste-o");
         } else {
-            System.out.println(" Você ainda precisa preencher alguns espaços!");
+            System.out.println("Você ainda precisa preenhcer algum espaço");
         }
     }
 
-    private static int runUntilGetValidNumber(final int min, final int max) {
+
+    private static int runUntilGetValidNumber(final int min, final int max){
         var current = scanner.nextInt();
-        while (current < min || current > max) {
+        while (current < min || current > max){
             System.out.printf("Informe um número entre %s e %s\n", min, max);
             current = scanner.nextInt();
         }
         return current;
-    }
-
-    private static void showGameHeader() {
-        System.out.println("\n" + "=".repeat(60));
-        System.out.println(" BEM-VINDO AO JOGO SUDOKU! ");
-        System.out.println("=".repeat(60));
-        System.out.println(" Instruções:");
-        System.out.println("   • Complete o tabuleiro 9x9 com números de 1 a 9");
-        System.out.println("   • Cada linha, coluna e quadrado 3x3 deve conter números únicos");
-        System.out.println("   • Números fixos não podem ser alterados");
-        System.out.println("=".repeat(60));
-    }
-
-    private static void showMenu() {
-        System.out.println("\n" + "─".repeat(50));
-        System.out.println(" MENU PRINCIPAL");
-        System.out.println("─".repeat(50));
-        System.out.println("1 - Iniciar um novo Jogo");
-        System.out.println("2 - Colocar um novo número");
-        System.out.println("3 - Remover um número");
-        System.out.println("4  - Visualizar jogo atual");
-        System.out.println("5  - Verificar status do jogo");
-        System.out.println("6  - Limpar jogo");
-        System.out.println("7  - Finalizar jogo");
-        System.out.println("8  - Sair");
-        System.out.println("─".repeat(50));
-        System.out.print("Escolha uma opção: ");
     }
 
 }

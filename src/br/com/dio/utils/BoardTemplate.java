@@ -1,11 +1,11 @@
 package br.com.dio.utils;
 
 public final class BoardTemplate {
-     private BoardTemplate(){
-        
-     }
 
-     public final static String BOARD_TEMPLATE =  """
+    private BoardTemplate() {}
+
+    public final static String BOARD_TEMPLATE =
+            """
             *************************************************************************************
             *|---0---||---1---||---2---|*|---3---||---4---||---5---|*|---6---||---7---||---8---|*
             *|       ||       ||       |*|       ||       ||       |*|       ||       ||       |*
@@ -56,4 +56,5 @@ public final class BoardTemplate {
             *|---0---||---1---||---2---|*|---3---||---4---||---5---|*|---6---||---7---||---8---|*
             *************************************************************************************
             """;
+
 }
